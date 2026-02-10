@@ -14,6 +14,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        
         $user = $request->user();
               // check if user is admin
         if($user->role === "admin"){

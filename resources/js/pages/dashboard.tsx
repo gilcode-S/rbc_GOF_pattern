@@ -1,10 +1,9 @@
-
-import { Head, usePage } from "@inertiajs/react";
+import React,{ useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose, DialogHeader } from "@/components/ui/dialog";
-import { User2, Bed,  Building2, UserCog } from "lucide-react";
 import AppLayout from "@/layouts/app-layout";
-import { useState } from "react";
+import { Head, usePage } from "@inertiajs/react";
+import { User2, Bed, Building2, UserCog } from "lucide-react";
 interface Room {
     room_id: number;
     room_number: number;
@@ -13,7 +12,7 @@ interface Room {
     status: string;
 };
 
-interface Hotel {
+    interface Hotel {
     tenant_id: number;
     hotel_name: string;
     contact_number: string;
@@ -21,11 +20,12 @@ interface Hotel {
     rooms: Room[];
 }
 
+
 export default function Dashboard() {
-    const { isAdmin, hotels, hotel, guestsCount, roomsCount, bookingsCount, totalHotels, totalRooms, totalManagers, totalGuests, auth } = usePage().props as unknown as any;
-
+    const { isAdmin, hotels, hotel, guestsCount, roomsCount, bookingsCount, totalHotels, totalRooms, totalManagers, totalGuests, auth, role } = usePage().props as unknown as any;
+   
     const user = auth?.user;
-
+  
     if (user?.role === 'manager' && !user?.tenant_id) {
         return (
             <AppLayout breadcrumbs={[{ title: 'Dashboard', href: '/dashboard' }]}>
@@ -33,7 +33,6 @@ export default function Dashboard() {
                 <div className="flex items-center justify-center h-screen">
                     <h1 className="text-xl font-bold text-gray-600">You are not Manager of any hotel yet.</h1>
                 </div>
-
             </AppLayout>
         );
     }
@@ -69,7 +68,7 @@ export default function Dashboard() {
 
                         <Card className="p-6 text-center bg-purple-500 dark:bg-purple-950 border-purple-200 dark:border-purple-800">
                             <UserCog className="mx-auto text-purple-500" size={32} />
-                            <div className="text-lg font-semibold mb-2">Total Manger</div>
+                            <div className="text-lg font-semibold mb-2">Total Manager</div>
                             <div className="text-2xl font-bold">{totalManagers ?? 0}</div>
                         </Card>
 
@@ -114,25 +113,25 @@ export default function Dashboard() {
                                         Rooms:
                                     </div>
 
-                                    <ul className="ml-4 list-disc"> {selectOption?.rooms && selectOption.rooms.length > 0 ? (
-                                        selectOption.rooms.map((room: Room) => (
-                                            <li key={room.room_id} className="flex items-center text-sm  mb-1">
-                                                <Bed className="mr-1 text-green-500" size={16} />
-                                                Room {room.room_number} - {room.type} - {room.status} - {room.price_per_night}
-                                            </li>
-                                        ))
-                                    ) : (
-                                        <li className="text-xs text-gray-400">No Rooms</li>
-                                    )}
+                                    <ul className="ml-4 list-disc">
+                                        {selectOption?.rooms && selectOption.rooms.length > 0 ? (
+                                            selectOption.rooms.map((room: Room) => (
+                                                <li key={room.room_id} className="flex items-center text-sm  mb-1">
+                                                    <Bed className="mr-1 text-green-500" size={16} />
+                                                    Room {room.room_number} - {room.type} - {room.status} - ${room.price_per_night}
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li className="text-xs text-gray-400">No Rooms</li>
+                                        )}
                                     </ul>
 
                                 </DialogDescription>
                             </DialogHeader>
-
+                            <DialogClose/>
                         </DialogContent>
                     </Dialog>
                 </div>
-
             </AppLayout >
         );
     }
