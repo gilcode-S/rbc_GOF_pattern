@@ -54,26 +54,26 @@ export default function Dashboard() {
                     <h1 className="text-2xl font-bold mb-6"> ALL hotels overview</h1>
                     {/* summary cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <Card className="p-6 text-center bg-blue-500 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
+                        <Card className="p-6 text-center bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
                             <Building2 className="mx-auto mb-2 text-blue-500" size={32}></Building2>
                             <div className="text-lg font-semibold mb-2">Total Hotels</div>
                             <div className="text-3xl font-bold">{totalHotels ?? 0}</div>
                         </Card>
 
-                        <Card className="p-6 text-center bg-green-500 dark:bg-green-950 border-green-200 dark:border-green-800">
+                        <Card className="p-6 text-center bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
                             <Bed className="mx-auto text-green-500" size={32}></Bed>
                             <div className="text-lg font-semibold mb-2">Total Rooms</div>
                             <div className="text-3xl font-bold">{totalRooms ?? 0}</div>
                         </Card>
 
-                        <Card className="p-6 text-center bg-purple-500 dark:bg-purple-950 border-purple-200 dark:border-purple-800">
+                        <Card className="p-6 text-center bg-purple-50 dark:bg-purple-950 border-purple-200 dark:border-purple-800">
                             <UserCog className="mx-auto text-purple-500" size={32} />
                             <div className="text-lg font-semibold mb-2">Total Manager</div>
                             <div className="text-2xl font-bold">{totalManagers ?? 0}</div>
                         </Card>
 
 
-                        <Card className="p-6 text-center bg-yellow-500 dark:bg-yellow-950 border-yellow-200 dark:border-yellow-800">
+                        <Card className="p-6 text-center bg-yellow-50 dark:bg-yellow-950 border-yellow-200 dark:border-yellow-800">
                             <User2 className="mx-auto text-yellow-500" size={32} />
                             <div className="text-lg font-semibold mb-2">Total Guests</div>
                             <div className="text-2xl font-bold">{totalGuests ?? 0}</div>
@@ -113,17 +113,16 @@ export default function Dashboard() {
                                         Rooms:
                                     </div>
 
-                                    <ul className="ml-4 list-disc">
-                                        {selectOption?.rooms && selectOption.rooms.length > 0 ? (
-                                            selectOption.rooms.map((room: Room) => (
-                                                <li key={room.room_id} className="flex items-center text-sm  mb-1">
-                                                    <Bed className="mr-1 text-green-500" size={16} />
-                                                    Room {room.room_number} - {room.type} - {room.status} - ${room.price_per_night}
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <li className="text-xs text-gray-400">No Rooms</li>
-                                        )}
+                                    <ul className="ml-4 list-disc"> {selectOption?.rooms && selectOption.rooms.length > 0 ? (
+                                        selectOption.rooms.map((room: Room) => (
+                                            <li key={room.room_id} className="flex items-center text-sm  mb-1">
+                                                <Bed className="mr-1 text-green-500" size={16} />
+                                                Room {room.room_number} - {room.type} - {room.status} - {room.price_per_night}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li className="text-xs text-gray-400">No Rooms</li>
+                                    )}
                                     </ul>
 
                                 </DialogDescription>
@@ -132,6 +131,7 @@ export default function Dashboard() {
                         </DialogContent>
                     </Dialog>
                 </div>
+
             </AppLayout >
         );
     }

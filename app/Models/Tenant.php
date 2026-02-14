@@ -20,7 +20,7 @@ class Tenant extends Model
     ];
 
     
-    public $timestamps = false;
+   
 
     public function rooms()
     {
