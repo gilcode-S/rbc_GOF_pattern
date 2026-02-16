@@ -12,7 +12,9 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
-
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +33,26 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+
+        Fortify::authenticateUsing(function ($request) {
+            $user = User::where('email', $request->email)->first();
+        
+            if ($user && Hash::check($request->password, $user->password)) {
+        
+                // ✅ Check if user is active
+                if (! $user->is_active) {
+                    // Throw a friendly validation exception
+                    throw ValidationException::withMessages([
+                        'email' => 'Your account is deactivated. Please contact the admin.',
+                    ]);
+                }
+        
+                return $user; // Login successful
+            }
+        
+            // Default failed login
+            return null;
+        });
     }
 
     /**
