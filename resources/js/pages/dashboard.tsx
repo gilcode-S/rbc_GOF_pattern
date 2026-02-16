@@ -22,7 +22,7 @@ interface Room {
 
 
 export default function Dashboard() {
-    const { isAdmin, hotels, hotel, guestsCount, roomsCount, bookingsCount, totalHotels, totalRooms, totalManagers, totalGuests, auth, role } = usePage().props as unknown as any;
+    const { isAdmin, hotels, hotel, guestsCount, roomsCount, bookingsCount, totalHotels, totalRooms, totalManagers, totalGuests, auth } = usePage().props as unknown as any;
    
     const user = auth?.user;
   

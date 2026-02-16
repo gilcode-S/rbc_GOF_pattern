@@ -58,17 +58,20 @@ class AssignManagerController extends Controller
     // assign function 
     public function assign(Request $request, $managerId)
     {
-        // validatation
         $request->validate([
-            'tenant' => 'required|exist:tenants, tenant_id',
+            'tenant_id' => 'required|exists:tenants,tenant_id',
         ]);
-
-        $manager = User::where('role', 'manager')->findOrFail($managerId);
+    
+        $manager = User::where('role', 'manager')
+            ->where('id', $managerId)
+            ->firstOrFail();
+    
         $manager->tenant_id = $request->tenant_id;
         $manager->save();
-
+    
         return redirect()->route('assign-manager');
     }
+    
 
     public function unassign($managerId)
     {
