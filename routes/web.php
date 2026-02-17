@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignManagerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -23,6 +24,8 @@ Route::post('/assign-manager/{managerId}/assign' , [AssignManagerController::cla
 Route::post('/assign-manager/{managerId}/unassign' , [AssignManagerController::class, 'unassign'])->name('assign-manager.unassign');
 Route::post('/users/{id}/toggle-active', [AssignManagerController::class, 'toggleActive'])->name('user.toggleActive');
 
+//  routes for manager (hotel ROOMS)
+Route::resource('rooms', RoomController::class)->except(['create', 'edit',])->middleware(['auth', 'verified']);
 
 
 require __DIR__.'/settings.php';
